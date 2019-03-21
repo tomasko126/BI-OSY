@@ -1,0 +1,4 @@
+"/Users/tomastaro/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/183.5429.37/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/tomastaro/Documents/GitHub/BI-OSY/first_task
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/tomastaro/Documents/GitHub/BI-OSY/first_task/cmake-build-debug
