@@ -218,7 +218,7 @@ public:
 
         while (true) {
             // Lock the critical section
-            unique_lock<mutex> bufferMtx (bufferMutex);
+            unique_lock<mutex> bufferMtx (bufferMutex2);
 
             // Buffer could have been free'd in the meantime,
             // wait until there's a job to process or until we need to finish
@@ -253,7 +253,7 @@ public:
             }
 
             // Lock the critical section
-            unique_lock<mutex> priceLock (priceListMutex);
+            unique_lock<mutex> priceLock (priceListMutex2);
 
             // Wait until we've got price for every producer
             updatedPriceList.wait(priceLock, [&] () {
@@ -282,7 +282,10 @@ private:
     vector<thread> helperThreads;
 
     mutex bufferMutex;
+    mutex bufferMutex2;
+
     mutex priceListMutex;
+    mutex priceListMutex2;
 
     condition_variable bufferFull;
     condition_variable bufferFree;
@@ -307,9 +310,9 @@ int main(void) {
     AProducerAsync p2 = make_shared<CProducerAsync> ( bind ( &CWeldingCompany::AddPriceList, &test, _1, _2 ) );
     test . AddProducer ( p1 );
     test . AddProducer ( p2 );
-    test . AddCustomer ( make_shared<CCustomerTest> ( 2 ) );
+    test . AddCustomer ( make_shared<CCustomerTest> ( 5 ) );
     p2 -> Start ();
-    test . Start ( 3 );
+    test . Start ( 5 );
     test . Stop ();
     p2 -> Stop ();
     return 0;
